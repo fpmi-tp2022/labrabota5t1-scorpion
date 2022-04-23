@@ -38,11 +38,30 @@ int main()
                 break;
             }
             case 2:
+            {
+                string table = "";
+                string column = "";
+                string value = "";
+                string columnToChange = "";
+                string newValue = getUpdateValue(table, column, value, columnToChange);
+                update(db, table, column, value, columnToChange, newValue);
                 break;
+            }
             case 3:
+            {
+                string table = "";
+                string column = "";
+                string deleteValue = getDeleteData(table, column);
+                deleteRecord(db, table, column, deleteValue);
                 break;
+            }
             case 4:
+            {
+                int count = 0;
+                string table = getSelectData(count);
+                selectAllRecords(db, table, count);
                 break;
+            }
             case 5:
                 continueBool = false;
                 break;

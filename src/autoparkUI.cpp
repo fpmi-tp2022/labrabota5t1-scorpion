@@ -123,6 +123,185 @@ string getIndertData(string& table)
     return data;
 }
 
+// Get data for deleting record from table
+string getDeleteData(string& table, string& column)
+{
+    string data = "";
+    
+    cout << "1. Удалить данные из таблицы users" << endl;
+    cout << "2. Удалить данные из таблицы drivers" << endl;
+    cout << "3. Удалить данные из таблицы cars" << endl;
+    cout << "4. Удалить данные из таблицы completed_orders" << endl;
+    
+    int option = 0;
+    cin >> option;
+    
+    switch(option)
+    {
+        case 1:
+        {
+            table = "users";
+            column = "login";
+            cout << "Введите логин пользователя" << endl;
+            cin >> data;
+            break;
+        }
+        case 2:
+        {
+            table = "drivers";
+            column = "service_number";
+            cout << "Введите табельный номер водителя" << endl;
+            cin >> data;
+            break;
+        }
+        case 3:
+        {
+            table = "cars";
+            column = "car_number";
+            cout << "Введите номер машины" << endl;
+            cin >> data;
+            break;
+        }
+        case 4:
+        {
+            table = "completed_orders";
+            column = "id";
+            cout << "Введите номер заказа" << endl;
+            cin >> data;
+            break;
+        }
+        default:
+        {
+            cout << "Выбранной опции не существует" << endl;
+            break;
+        }
+    }
+    
+    return data;
+}
+
+// Get data for updating record in table
+string getUpdateValue(string& table, string& column, string& value, string& columnToChange)
+{
+    string data = "";
+    
+    cout << "1. Обновить все данные в таблице users" << endl;
+    cout << "2. Обновить все данные в таблице drivers" << endl;
+    cout << "3. Обновить все данные в таблице cars" << endl;
+    cout << "4. Обновить все данные в таблице completed_orders" << endl;
+    
+    int option = 0;
+    cin >> option;
+    
+    switch(option)
+    {
+        case 1:
+        {
+            table = "users";
+            column = "login";
+            cout << "Введите логин пользователя" << endl;
+            cin >> value;
+            cout << "Введите название колонки, в которой хотите изменить значение" << endl;
+            cin >> columnToChange;
+            cout << "Введите новое значение" << endl;
+            cin >> data;
+            break;
+        }
+        case 2:
+        {
+            table = "drivers";
+            column = "service_number";
+            cout << "Введите табельный номер водителя" << endl;
+            cin >> value;
+            cout << "Введите название колонки, в которой хотите изменить значение" << endl;
+            cin >> columnToChange;
+            cout << "Введите новое значение" << endl;
+            cin >> data;
+            break;
+        }
+        case 3:
+        {
+            table = "cars";
+            column = "car_number";
+            cout << "Введите номер машины" << endl;
+            cin >> value;
+            cout << "Введите название колонки, в которой хотите изменить значение" << endl;
+            cin >> columnToChange;
+            cout << "Введите новое значение" << endl;
+            cin >> data;
+            break;
+        }
+        case 4:
+        {
+            table = "completed_orders";
+            column = "id";
+            cout << "Введите номер заказа" << endl;
+            cin >> value;
+            cout << "Введите название колонки, в которой хотите изменить значение" << endl;
+            cin >> columnToChange;
+            cout << "Введите новое значение" << endl;
+            cin >> data;
+            break;
+        }
+        default:
+        {
+            cout << "Выбранной опции не существует" << endl;
+            break;
+        }
+    }
+    
+    return data;
+}
+
+// Get all data from a table
+string getSelectData(int &count)
+{
+    string data = "";
+    
+    cout << "1. Вывести все данные из таблицы users" << endl;
+    cout << "2. Вывести все данные из таблицы drivers" << endl;
+    cout << "3. Вывести все данные из таблицы cars" << endl;
+    cout << "4. Вывести все данные из таблицы completed_orders" << endl;
+    
+    int option = 0;
+    cin >> option;
+    
+    switch(option)
+    {
+        case 1:
+        {
+            data = "users";
+            count = 2;
+            break;
+        }
+        case 2:
+        {
+            data = "drivers";
+            count = 8;
+            break;
+        }
+        case 3:
+        {
+            data = "cars";
+            count = 4;
+            break;
+        }
+        case 4:
+        {
+            data = "completed_orders";
+            count = 8;
+            break;
+        }
+        default:
+        {
+            cout << "Выбранной опции не существует" << endl;
+            break;
+        }
+    }
+    
+    return data;
+}
+
 // Print menu for admin
 void printAdminMenu()
 {

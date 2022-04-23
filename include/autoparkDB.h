@@ -19,3 +19,6 @@ void printSelect(sqlite3_stmt *res, int count);
 
 // Select all records from a table
 void selectAllRecords(sqlite3 *db, string table, int count);
+
+// Select orders by driver and period
+void getOrdersByDriver(sqlite3 *db, string driverServiceNumber, string period);

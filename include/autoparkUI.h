@@ -17,5 +17,11 @@ string getUpdateValue(string& table, string& column, string& value, string& colu
 // Get all data from a table
 string getSelectData(int& count);
 
+// Get driver service number
+string getDriverData();
+
+// Get period
+string getPeriodData();
+
 // Print menu for admin
 void printAdminMenu();

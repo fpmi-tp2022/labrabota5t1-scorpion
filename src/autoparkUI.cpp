@@ -302,6 +302,41 @@ string getSelectData(int &count)
     return data;
 }
 
+// Get driver service number
+string getDriverData()
+{
+    cout << "Введите табельный номер водителя" << endl;
+    string driverServiceNumber = "";
+    cin >> driverServiceNumber;
+    return driverServiceNumber;
+}
+
+// Get period
+string getPeriodData()
+{
+    cout << "Вывести данные за весь период? (да/нет)" << endl;
+    string answer;
+    cin >> answer;
+    
+    string data;
+    if(answer == "да")
+    {
+        data = "all";
+    }
+    else
+    {
+        cout << "Введите первую дату" << endl;
+        string firstDate = "";
+        cin >> firstDate;
+        cout << "Введите вторую дату" << endl;
+        string secondDate = "";
+        cin >> secondDate;
+        data = "'" + firstDate + "' and '" + secondDate + "'";
+    }
+    
+    return data;
+}
+
 // Print menu for admin
 void printAdminMenu()
 {

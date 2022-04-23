@@ -57,9 +57,34 @@ int main()
             }
             case 4:
             {
-                int count = 0;
-                string table = getSelectData(count);
-                selectAllRecords(db, table, count);
+                cout << "1. Вывести всю таблицу" << endl;
+                cout << "2. По указанному водителю вывести перечень выполненных заказов за указанный период" << endl;
+                
+                int choice = 0;
+                cin >> choice;
+                
+                switch(choice)
+                {
+                    case 1:
+                    {
+                        int count = 0;
+                        string table = getSelectData(count);
+                        selectAllRecords(db, table, count);
+                        break;
+                    }
+                    case 2:
+                    {
+                        string driverServiceNumber = getDriverData();
+                        string period = getPeriodData();
+                        getOrdersByDriver(db, driverServiceNumber, period);
+                        break;
+                    }
+                    default:
+                    {
+                        cout << "Выбранной опции не существует" << endl;
+                        break;
+                    }
+                }
                 break;
             }
             case 5:

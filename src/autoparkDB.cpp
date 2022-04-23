@@ -110,3 +110,29 @@ void selectAllRecords(sqlite3 *db, string table, int count)
     printSelect(res, count);
     sqlite3_finalize(res);
 }
+
+// Select orders by driver and period
+void getOrdersByDriver(sqlite3 *db, string driverServiceNumber, string period)
+{
+    sqlite3_stmt *res;
+    string sql = "";
+    
+    if(period == "all")
+    {
+        sql = "SELECT * from completed_orders where driver_service_number='" + driverServiceNumber + "'";
+    }
+    else
+    {
+        sql = "SELECT * from completed_orders where driver_service_number='" + driverServiceNumber + "' and date between " + period;
+    }
+    
+    int rc = sqlite3_prepare_v2(db, sql.c_str(), -1, &res, 0);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "SQL error: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+    
+    printSelect(res, 8);
+    sqlite3_finalize(res);
+}

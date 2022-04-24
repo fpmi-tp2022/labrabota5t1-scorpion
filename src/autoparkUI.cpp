@@ -253,7 +253,7 @@ string getUpdateValue(string& table, string& column, string& value, string& colu
     return data;
 }
 
-// Get all data from a table
+// Get data for selecting all table
 string getSelectData(int &count)
 {
     string data = "";

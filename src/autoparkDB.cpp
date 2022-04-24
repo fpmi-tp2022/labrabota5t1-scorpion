@@ -69,7 +69,7 @@ void update(sqlite3 *db, string table, string column, string value, string colum
     }
 }
 
-// Print Selected records
+// Print selected records
 void printSelect(sqlite3_stmt *res, int count)
 {
     while(true)
@@ -112,7 +112,7 @@ void selectAllRecords(sqlite3 *db, string table, int count)
     sqlite3_finalize(res);
 }
 
-// Select orders by driver and period
+// Select and print orders by driver and period
 void getOrdersByDriver(sqlite3 *db, string driverServiceNumber, string period)
 {
     sqlite3_stmt *res;
@@ -138,7 +138,7 @@ void getOrdersByDriver(sqlite3 *db, string driverServiceNumber, string period)
     sqlite3_finalize(res);
 }
 
-// Get total mileage of a car and total weight of transported goods
+// Get and print total mileage of a car
 void getMileageByCar(sqlite3 *db, string carNumber)
 {
     sqlite3_stmt *res;
@@ -185,17 +185,23 @@ void getMileageByCar(sqlite3 *db, string carNumber)
     cout << "Общий пробег:" << endl;
     cout << kilometrageInt + mileageInt << endl;
     
+    sqlite3_finalize(res);
+}
+
+// Get and print total weight of transported goods by car
+void getTransportedWeightByCar(sqlite3 *db, string carNumber)
+{
+    sqlite3_stmt *res;
+    string sql = "SELECT sum(cargo_weight) from completed_orders where car_number='" + carNumber + "'";
     
-    sql = "SELECT sum(cargo_weight) from completed_orders where car_number='" + carNumber + "'";
-    
-    rc = sqlite3_prepare_v2(db, sql.c_str(), -1, &res, 0);
+    int rc = sqlite3_prepare_v2(db, sql.c_str(), -1, &res, 0);
     if (rc != SQLITE_OK)
     {
         cerr << "SQL error: " << sqlite3_errmsg(db) << endl;
         return;
     }
     
-    step = sqlite3_step(res);
+    int step = sqlite3_step(res);
     
     const unsigned char* totalWeight;
     if (step == SQLITE_ROW)
@@ -205,6 +211,87 @@ void getMileageByCar(sqlite3 *db, string carNumber)
     
     cout << "Общая масса перевезенных грузов:" << endl;
     cout << totalWeight << endl;
+    
+    sqlite3_finalize(res);
+}
+
+// Get and print total number of trips by driver
+void getNumOfTripsByDriver(sqlite3 *db, string driverServiceNumber)
+{
+    sqlite3_stmt *res;
+    string sql = "SELECT count(id) from completed_orders where driver_service_number='" + driverServiceNumber + "'";
+    
+    int rc = sqlite3_prepare_v2(db, sql.c_str(), -1, &res, 0);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "SQL error: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+    
+    int step = sqlite3_step(res);
+    
+    const unsigned char* numTrips;
+    if (step == SQLITE_ROW)
+    {
+        numTrips = sqlite3_column_text(res, 0);
+    }
+    
+    cout << "Общее количество поездок:" << endl;
+    cout << numTrips << endl;
+    
+    sqlite3_finalize(res);
+}
+
+// Get and print total weight of transported goods by driver
+void getTransportedWeightByDriver(sqlite3 *db, string driverServiceNumber)
+{
+    sqlite3_stmt *res;
+    string sql = "SELECT sum(cargo_weight) from completed_orders where driver_service_number='" + driverServiceNumber + "'";
+    
+    int rc = sqlite3_prepare_v2(db, sql.c_str(), -1, &res, 0);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "SQL error: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+    
+    int step = sqlite3_step(res);
+    
+    const unsigned char* totalWeight;
+    if (step == SQLITE_ROW)
+    {
+        totalWeight = sqlite3_column_text(res, 0);
+    }
+    
+    cout << "Общая масса перевезенных грузов:" << endl;
+    cout << totalWeight << endl;
+    
+    sqlite3_finalize(res);
+}
+
+// Get and print total sum of earned money by driver
+void getEarningsByDriver(sqlite3 *db, string driverServiceNumber)
+{
+    sqlite3_stmt *res;
+    string sql = "SELECT sum(cost) from completed_orders where driver_service_number='" + driverServiceNumber + "'";
+    
+    int rc = sqlite3_prepare_v2(db, sql.c_str(), -1, &res, 0);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "SQL error: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+    
+    int step = sqlite3_step(res);
+    
+    const unsigned char* totalCost;
+    if (step == SQLITE_ROW)
+    {
+        totalCost = sqlite3_column_text(res, 0);
+    }
+    
+    cout << "Общая сумма заработанных денег:" << endl;
+    cout << totalCost << endl;
     
     sqlite3_finalize(res);
 }

@@ -14,7 +14,7 @@ string getDeleteData(string& table, string& column);
 // Get data for updating record in table
 string getUpdateValue(string& table, string& column, string& value, string& columnToChange);
 
-// Get all data from a table
+// Get data for selecting all table
 string getSelectData(int& count);
 
 // Get driver service number

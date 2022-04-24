@@ -59,6 +59,7 @@ int main()
             {
                 cout << "1. Вывести всю таблицу" << endl;
                 cout << "2. По указанному водителю вывести перечень выполненных заказов за указанный период" << endl;
+                cout << "3. По указанной машине вывести общий пробег и общую массу перевезенных грузов" << endl;
                 
                 int choice = 0;
                 cin >> choice;
@@ -77,6 +78,12 @@ int main()
                         string driverServiceNumber = getDriverData();
                         string period = getPeriodData();
                         getOrdersByDriver(db, driverServiceNumber, period);
+                        break;
+                    }
+                    case 3:
+                    {
+                        string carNumber = getCarData();
+                        getMileageByCar(db, carNumber);
                         break;
                     }
                     default:

@@ -22,3 +22,6 @@ void selectAllRecords(sqlite3 *db, string table, int count);
 
 // Select orders by driver and period
 void getOrdersByDriver(sqlite3 *db, string driverServiceNumber, string period);
+
+// Get total mileage of a car and total weight of transported goods
+void getMileageByCar(sqlite3 *db, string carNumber);

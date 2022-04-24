@@ -311,6 +311,15 @@ string getDriverData()
     return driverServiceNumber;
 }
 
+// Get car number
+string getCarData()
+{
+    cout << "Введите номер машины" << endl;
+    string carNumber = "";
+    cin >> carNumber;
+    return carNumber;
+}
+
 // Get period
 string getPeriodData()
 {

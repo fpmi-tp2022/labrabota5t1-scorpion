@@ -20,6 +20,9 @@ string getSelectData(int& count);
 // Get driver service number
 string getDriverData();
 
+// Get car number
+string getCarData();
+
 // Get period
 string getPeriodData();
 

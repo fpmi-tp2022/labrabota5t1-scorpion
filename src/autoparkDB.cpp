@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <stdio.h>
+#include <stdlib.h>
 #include <sqlite3.h>
 #include <string>
 #include "../include/autoparkDB.h"
@@ -80,7 +81,7 @@ void printSelect(sqlite3_stmt *res, int count)
             {
                 printf("|%s", sqlite3_column_text(res, i));
             }
-            printf("\n");
+            printf("|\n");
         }
         else
         {
@@ -134,5 +135,76 @@ void getOrdersByDriver(sqlite3 *db, string driverServiceNumber, string period)
     }
     
     printSelect(res, 8);
+    sqlite3_finalize(res);
+}
+
+// Get total mileage of a car and total weight of transported goods
+void getMileageByCar(sqlite3 *db, string carNumber)
+{
+    sqlite3_stmt *res;
+    string sql = "SELECT sum(kilometrage) from completed_orders where car_number='" + carNumber + "'";
+    
+    int rc = sqlite3_prepare_v2(db, sql.c_str(), -1, &res, 0);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "SQL error: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+    
+    int step = sqlite3_step(res);
+    
+    const unsigned char* kilometrage;
+    if (step == SQLITE_ROW)
+    {
+        kilometrage = sqlite3_column_text(res, 0);
+    }
+    
+    sql = "SELECT mileage from cars where car_number='" + carNumber + "'";
+    
+    rc = sqlite3_prepare_v2(db, sql.c_str(), -1, &res, 0);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "SQL error: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+    
+    step = sqlite3_step(res);
+    
+    const unsigned char* mileage;
+    if (step == SQLITE_ROW)
+    {
+        mileage = sqlite3_column_text(res, 0);
+    }
+    
+    string kilometrageChar = (char*)kilometrage;
+    string mileageChar = (char*)mileage;
+    
+    int kilometrageInt = stoi(kilometrageChar);
+    int mileageInt = stoi(mileageChar);
+    
+    cout << "Общий пробег:" << endl;
+    cout << kilometrageInt + mileageInt << endl;
+    
+    
+    sql = "SELECT sum(cargo_weight) from completed_orders where car_number='" + carNumber + "'";
+    
+    rc = sqlite3_prepare_v2(db, sql.c_str(), -1, &res, 0);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "SQL error: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+    
+    step = sqlite3_step(res);
+    
+    const unsigned char* totalWeight;
+    if (step == SQLITE_ROW)
+    {
+        totalWeight = sqlite3_column_text(res, 0);
+    }
+    
+    cout << "Общая масса перевезенных грузов:" << endl;
+    cout << totalWeight << endl;
+    
     sqlite3_finalize(res);
 }

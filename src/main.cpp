@@ -61,6 +61,7 @@ int main()
                 cout << "2. По указанному водителю вывести перечень выполненных заказов за указанный период" << endl;
                 cout << "3. По указанной машине вывести общий пробег и общую массу перевезенных грузов" << endl;
                 cout << "4. По каждому водителю вывести общее количество поездок, общую массу перевезенных грузов и сумму заработанных денег" << endl;
+                cout << "5. По водителю, выполнившему наименьшее количество поездок, вывести все сведения и количество полученных денег" << endl;
                 
                 int choice = 0;
                 cin >> choice;
@@ -94,6 +95,12 @@ int main()
                         getNumOfTripsByDriver(db, driverServiceNumber);
                         getTransportedWeightByDriver(db, driverServiceNumber);
                         getEarningsByDriver(db, driverServiceNumber);
+                        break;
+                    }
+                    case 5:
+                    {
+                        getDriverWithMinTripsNumInfo(db);
+                        break;
                     }
                     default:
                     {
@@ -104,11 +111,15 @@ int main()
                 break;
             }
             case 5:
+            {
                 continueBool = false;
                 break;
+            }
             default:
+            {
                 cout << "Выбранной опции не существует" << endl;
                 break;
+            }
         }
         
     }

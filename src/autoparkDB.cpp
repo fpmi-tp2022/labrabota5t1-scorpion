@@ -295,3 +295,60 @@ void getEarningsByDriver(sqlite3 *db, string driverServiceNumber)
     
     sqlite3_finalize(res);
 }
+
+// Get and print information about a driver with min number of trips
+void getDriverWithMinTripsNumInfo(sqlite3 *db)
+{
+    sqlite3_stmt *res;
+    string sql = "SELECT count(*), driver_service_number from completed_orders group by driver_service_number order by count(*) asc";
+    
+    int rc = sqlite3_prepare_v2(db, sql.c_str(), -1, &res, 0);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "SQL error: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+    
+    int step = sqlite3_step(res);
+    int min = stoi((char*)sqlite3_column_text(res, 0));
+    
+    cout << "Водители, выполнившие наименьшее количество поездок (min = " << min << ")" << endl;
+    
+    int count = 8;
+    
+    while (step == SQLITE_ROW)
+    {
+        if  (stoi((char*)sqlite3_column_text(res, 0)) == min)
+        {
+            string driverServiceNumber = (char*)sqlite3_column_text(res, 1);
+            sql = "SELECT * from drivers where service_number='" + driverServiceNumber + "'";
+            
+            sqlite3_stmt *resDriver;
+            rc = sqlite3_prepare_v2(db, sql.c_str(), -1, &resDriver, 0);
+            if (rc != SQLITE_OK)
+            {
+                cerr << "SQL error: " << sqlite3_errmsg(db) << endl;
+                return;
+            }
+            
+            int step2 = sqlite3_step(resDriver);
+            if (step2 == SQLITE_ROW)
+            {
+                for(int i = 0; i < count; i++)
+                {
+                    printf("|%s", sqlite3_column_text(resDriver, i));
+                }
+                printf("|\n");
+            }
+            getEarningsByDriver(db, driverServiceNumber);            
+            sqlite3_finalize(resDriver);
+        }
+        else
+        {
+            break;
+        }
+        step = sqlite3_step(res);
+    }
+    
+    sqlite3_finalize(res);
+}

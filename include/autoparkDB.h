@@ -37,3 +37,6 @@ void getTransportedWeightByDriver(sqlite3 *db, string driverServiceNumber);
 
 // Get and print total sum of earned money by driver
 void getEarningsByDriver(sqlite3 *db, string driverServiceNumber);
+
+// Get and print information about a driver with min number of trips
+void getDriverWithMinTripsNumInfo(sqlite3 *db);

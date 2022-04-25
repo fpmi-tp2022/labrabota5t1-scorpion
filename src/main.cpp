@@ -74,15 +74,19 @@ int main()
                 {
                     case 1:
                     {
-                        int count = 0;
-                        string table = getSelectData(count);
-                        selectAllRecords(db, table, count);
+                        int columnNumber = 0;
+                        string columnNames = "";
+                        string table = getSelectData(columnNumber, columnNames);
+                        cout << columnNames << endl;
+                        selectAllRecords(db, table, columnNumber);
                         break;
                     }
                     case 2:
                     {
                         string driverServiceNumber = getDriverServiceNumber();
                         string period = getPeriodData();
+                        string columnNames = "|id|date|driver_last_name|car_number|kilometrage|cargo_weight|cost|driver_service_number|";
+                        cout << columnNames << endl;
                         getOrdersByDriver(db, driverServiceNumber, period);
                         break;
                     }

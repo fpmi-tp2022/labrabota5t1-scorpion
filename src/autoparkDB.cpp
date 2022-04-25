@@ -165,14 +165,14 @@ void update(sqlite3 *db, string table, string column, string value, string colum
 }
 
 // Print selected records
-void printSelect(sqlite3_stmt *res, int count)
+void printSelect(sqlite3_stmt *res, int columnNumber)
 {
     while(true)
     {
         int step = sqlite3_step(res);
         if (step == SQLITE_ROW)
         {
-            for(int i = 0; i < count; i++)
+            for(int i = 0; i < columnNumber; i++)
             {
                 printf("|%s", sqlite3_column_text(res, i));
             }
@@ -186,7 +186,7 @@ void printSelect(sqlite3_stmt *res, int count)
 }
 
 // Select all records from a table
-void selectAllRecords(sqlite3 *db, string table, int count)
+void selectAllRecords(sqlite3 *db, string table, int columnNumber)
 {
     if(table == "")
     {
@@ -203,7 +203,7 @@ void selectAllRecords(sqlite3 *db, string table, int count)
         return;
     }
     
-    printSelect(res, count);
+    printSelect(res, columnNumber);
     sqlite3_finalize(res);
 }
 
@@ -434,8 +434,10 @@ void getDriverWithMinTripsNumInfo(sqlite3 *db)
     int min = stoi((char*)sqlite3_column_text(res, 0));
     
     cout << "Водители, выполнившие наименьшее количество поездок (min = " << min << ")" << endl;
+    string columnNames = "|service_number|last_name|category|work_experience|address|birth_year|cars_car_number|";
+    cout << columnNames << endl;
     
-    int count = 7;
+    int columnNumber = 7;
     
     while (step == SQLITE_ROW)
     {
@@ -455,7 +457,7 @@ void getDriverWithMinTripsNumInfo(sqlite3 *db)
             int step2 = sqlite3_step(resDriver);
             if (step2 == SQLITE_ROW)
             {
-                for(int i = 0; i < count; i++)
+                for(int i = 0; i < columnNumber; i++)
                 {
                     printf("|%s", sqlite3_column_text(resDriver, i));
                 }

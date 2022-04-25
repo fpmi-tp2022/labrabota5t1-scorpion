@@ -252,7 +252,7 @@ string getUpdateValue(string& table, string& column, string& value, string& colu
 }
 
 // Get data for selecting all table
-string getSelectData(int &count)
+string getSelectData(int &columnNumber, string& columnNames)
 {
     string data = "";
     
@@ -269,25 +269,29 @@ string getSelectData(int &count)
         case 1:
         {
             data = "users";
-            count = 2;
+            columnNames = "|login|drivers_service_number|";
+            columnNumber = 2;
             break;
         }
         case 2:
         {
             data = "drivers";
-            count = 7;
+            columnNames = "|service_number|last_name|category|work_experience|address|birth_year|cars_car_number|";
+            columnNumber = 7;
             break;
         }
         case 3:
         {
             data = "cars";
-            count = 4;
+            columnNames = "|car_number|brand|mileage|capacity|";
+            columnNumber = 4;
             break;
         }
         case 4:
         {
             data = "completed_orders";
-            count = 8;
+            columnNames = "|id|date|driver_last_name|car_number|kilometrage|cargo_weight|cost|driver_service_number|";
+            columnNumber = 8;
             break;
         }
         default:

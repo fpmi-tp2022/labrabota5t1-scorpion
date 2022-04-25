@@ -15,7 +15,7 @@ string getDeleteData(string& table, string& column);
 string getUpdateValue(string& table, string& column, string& value, string& columnToChange);
 
 // Get data for selecting all table
-string getSelectData(int& count);
+string getSelectData(int& columnNumber, string& columnNames);
 
 // Get driver service number
 string getDriverServiceNumber();

@@ -18,10 +18,10 @@ void deleteRecord(sqlite3 *db, string table, string column, string deleteValue);
 void update(sqlite3 *db, string table, string column, string value, string columnToChange, string newValue);
 
 // Print selected records
-void printSelect(sqlite3_stmt *res, int count);
+void printSelect(sqlite3_stmt *res, int columnNumber);
 
 // Select all records from a table
-void selectAllRecords(sqlite3 *db, string table, int count);
+void selectAllRecords(sqlite3 *db, string table, int columnNumber);
 
 // Select and print orders by driver and period
 void getOrdersByDriver(sqlite3 *db, string driverServiceNumber, string period);

@@ -18,10 +18,10 @@ string getUpdateValue(string& table, string& column, string& value, string& colu
 string getSelectData(int& count);
 
 // Get driver service number
-string getDriverData();
+string getDriverServiceNumber();
 
 // Get car number
-string getCarData();
+string getCarNumber();
 
 // Get period
 string getPeriodData();

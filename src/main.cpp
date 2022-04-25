@@ -62,6 +62,7 @@ int main()
                 cout << "3. По указанной машине вывести общий пробег и общую массу перевезенных грузов" << endl;
                 cout << "4. По каждому водителю вывести общее количество поездок, общую массу перевезенных грузов и сумму заработанных денег" << endl;
                 cout << "5. По водителю, выполнившему наименьшее количество поездок, вывести все сведения и количество полученных денег" << endl;
+                cout << "6. По автомашине с наибольшим общим пробегом вывести все сведения" << endl;
                 
                 int choice = 0;
                 cin >> choice;
@@ -77,29 +78,31 @@ int main()
                     }
                     case 2:
                     {
-                        string driverServiceNumber = getDriverData();
+                        string driverServiceNumber = getDriverServiceNumber();
                         string period = getPeriodData();
                         getOrdersByDriver(db, driverServiceNumber, period);
                         break;
                     }
                     case 3:
                     {
-                        string carNumber = getCarData();
+                        string carNumber = getCarNumber();
                         getMileageByCar(db, carNumber);
                         getTransportedWeightByCar(db, carNumber);
                         break;
                     }
                     case 4:
                     {
-                        string driverServiceNumber = getDriverData();
-                        getNumOfTripsByDriver(db, driverServiceNumber);
-                        getTransportedWeightByDriver(db, driverServiceNumber);
-                        getEarningsByDriver(db, driverServiceNumber);
+                        getNumOfTripsTransportedWeightEarningsOfAllDrivers(db);
                         break;
                     }
                     case 5:
                     {
                         getDriverWithMinTripsNumInfo(db);
+                        break;
+                    }
+                    case 6:
+                    {
+                        getCarWithMaxMileage(db);
                         break;
                     }
                     default:

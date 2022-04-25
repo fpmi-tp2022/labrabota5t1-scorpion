@@ -176,15 +176,12 @@ void getMileageByCar(sqlite3 *db, string carNumber)
         mileage = sqlite3_column_text(res, 0);
     }
     
-    string kilometrageChar = (char*)kilometrage;
-    string mileageChar = (char*)mileage;
-    
-    int kilometrageInt = stoi(kilometrageChar);
-    int mileageInt = stoi(mileageChar);
+    int kilometrageInt = stoi((char*)kilometrage);
+    int mileageInt = stoi((char*)mileage);
     
     cout << "Общий пробег:" << endl;
     cout << kilometrageInt + mileageInt << endl;
-    
+
     sqlite3_finalize(res);
 }
 
@@ -215,6 +212,35 @@ void getTransportedWeightByCar(sqlite3 *db, string carNumber)
     sqlite3_finalize(res);
 }
 
+// Get and print total number of trips, total weight of transported goods and total sum
+// of earned money of all drivers
+void getNumOfTripsTransportedWeightEarningsOfAllDrivers(sqlite3 *db)
+{
+    sqlite3_stmt *res;
+    string sql = "SELECT service_number, last_name from drivers";
+    
+    int rc = sqlite3_prepare_v2(db, sql.c_str(), -1, &res, 0);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "SQL error: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+    
+    int step = sqlite3_step(res);
+    while (step == SQLITE_ROW)
+    {
+        string driverServiceNumber = (char*)sqlite3_column_text(res, 0);
+        cout << "\tТабельный номер: " << driverServiceNumber << endl;
+        cout << "\tФамилия водителя: " << sqlite3_column_text(res, 1) << endl;
+        getNumOfTripsByDriver(db, driverServiceNumber);
+        getTransportedWeightByDriver(db, driverServiceNumber);
+        getEarningsByDriver(db, driverServiceNumber);
+        step = sqlite3_step(res);
+    }
+    
+    sqlite3_finalize(res);
+}
+
 // Get and print total number of trips by driver
 void getNumOfTripsByDriver(sqlite3 *db, string driverServiceNumber)
 {
@@ -236,7 +262,7 @@ void getNumOfTripsByDriver(sqlite3 *db, string driverServiceNumber)
         numTrips = sqlite3_column_text(res, 0);
     }
     
-    cout << "Общее количество поездок:" << endl;
+    cout << "Общее количество поездок: ";
     cout << numTrips << endl;
     
     sqlite3_finalize(res);
@@ -263,7 +289,7 @@ void getTransportedWeightByDriver(sqlite3 *db, string driverServiceNumber)
         totalWeight = sqlite3_column_text(res, 0);
     }
     
-    cout << "Общая масса перевезенных грузов:" << endl;
+    cout << "Общая масса перевезенных грузов: ";
     cout << totalWeight << endl;
     
     sqlite3_finalize(res);
@@ -290,7 +316,7 @@ void getEarningsByDriver(sqlite3 *db, string driverServiceNumber)
         totalCost = sqlite3_column_text(res, 0);
     }
     
-    cout << "Общая сумма заработанных денег:" << endl;
+    cout << "Общая сумма заработанных денег: ";
     cout << totalCost << endl;
     
     sqlite3_finalize(res);
@@ -314,7 +340,7 @@ void getDriverWithMinTripsNumInfo(sqlite3 *db)
     
     cout << "Водители, выполнившие наименьшее количество поездок (min = " << min << ")" << endl;
     
-    int count = 8;
+    int count = 7;
     
     while (step == SQLITE_ROW)
     {
@@ -340,7 +366,7 @@ void getDriverWithMinTripsNumInfo(sqlite3 *db)
                 }
                 printf("|\n");
             }
-            getEarningsByDriver(db, driverServiceNumber);            
+            getEarningsByDriver(db, driverServiceNumber);
             sqlite3_finalize(resDriver);
         }
         else
@@ -351,4 +377,10 @@ void getDriverWithMinTripsNumInfo(sqlite3 *db)
     }
     
     sqlite3_finalize(res);
+}
+
+// Get and print information about a car with max mileage
+void getCarWithMaxMileage(sqlite3 *db)
+{
+    
 }

@@ -29,6 +29,10 @@ void getMileageByCar(sqlite3 *db, string carNumber);
 // Get and print total weight of transported goods by car
 void getTransportedWeightByCar(sqlite3 *db, string carNumber);
 
+// Get and print total number of trips, total weight of transported goods and total sum
+// of earned money of all drivers
+void getNumOfTripsTransportedWeightEarningsOfAllDrivers(sqlite3 *db);
+
 // Get and print total number of trips by driver
 void getNumOfTripsByDriver(sqlite3 *db, string driverServiceNumber);
 
@@ -40,3 +44,6 @@ void getEarningsByDriver(sqlite3 *db, string driverServiceNumber);
 
 // Get and print information about a driver with min number of trips
 void getDriverWithMinTripsNumInfo(sqlite3 *db);
+
+// Get and print information about a car with max mileage
+void getCarWithMaxMileage(sqlite3 *db);

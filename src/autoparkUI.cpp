@@ -277,7 +277,7 @@ string getSelectData(int &count)
         case 2:
         {
             data = "drivers";
-            count = 8;
+            count = 7;
             break;
         }
         case 3:
@@ -303,7 +303,7 @@ string getSelectData(int &count)
 }
 
 // Get driver service number
-string getDriverData()
+string getDriverServiceNumber()
 {
     cout << "Введите табельный номер водителя" << endl;
     string driverServiceNumber = "";
@@ -312,7 +312,7 @@ string getDriverData()
 }
 
 // Get car number
-string getCarData()
+string getCarNumber()
 {
     cout << "Введите номер машины" << endl;
     string carNumber = "";

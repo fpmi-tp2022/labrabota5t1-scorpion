@@ -9,8 +9,98 @@
 #include "../include/autoparkDB.h"
 using namespace std;
 
+// Insert image into a table (update table)
+void insertImage(sqlite3 *db, string fileName, string driverServiceNumber)
+{
+    FILE *fp = fopen(fileName.c_str(), "rb");
+    
+    if (fp == NULL)
+    {
+        fprintf(stderr, "Cannot open image file\n");
+        return;
+    }
+    
+    fseek(fp, 0, SEEK_END);
+    
+    if (ferror(fp))
+    {
+        fprintf(stderr, "fseek() failed\n");
+        int r = fclose(fp);
+        if (r == EOF) {
+            fprintf(stderr, "Cannot close file handler\n");
+        }
+        return;
+    }
+    
+    int flen = ftell(fp);
+    
+    if (flen == -1)
+    {
+        perror("error occurred");
+        int r = fclose(fp);
+        if (r == EOF) {
+            fprintf(stderr, "Cannot close file handler\n");
+        }
+        return;
+    }
+    
+    fseek(fp, 0, SEEK_SET);
+    
+    if (ferror(fp))
+    {
+        fprintf(stderr, "fseek() failed\n");
+        int r = fclose(fp);
+        if (r == EOF) {
+            fprintf(stderr, "Cannot close file handler\n");
+        }
+        return;
+    }
+    
+    char data[flen+1];
+    int size = fread(data, 1, flen, fp);
+    
+    if (ferror(fp))
+    {
+        fprintf(stderr, "fread() failed\n");
+        int r = fclose(fp);
+        if (r == EOF) {
+            fprintf(stderr, "Cannot close file handler\n");
+        }
+        return;
+    }
+    
+    int r = fclose(fp);
+    
+    if (r == EOF) {
+        fprintf(stderr, "Cannot close file handler\n");
+    }
+    
+    char *err_msg = 0;
+    sqlite3_stmt *pStmt;
+    
+    string sql = "update drivers set photo=(?) where service_number='" + driverServiceNumber + "'";
+    
+    int rc = sqlite3_prepare(db, sql.c_str(), -1, &pStmt, 0);
+    
+    if (rc != SQLITE_OK)
+    {
+        fprintf(stderr, "Cannot prepare statement: %s\n", sqlite3_errmsg(db));
+        return;
+    }
+    
+    sqlite3_bind_blob(pStmt, 1, data, size, SQLITE_STATIC);
+    
+    rc = sqlite3_step(pStmt);
+    if (rc != SQLITE_DONE)
+    {
+        printf("execution failed: %s", sqlite3_errmsg(db));
+    }
+    
+    sqlite3_finalize(pStmt);
+}
+
 // Insert data into a table
-void insert(sqlite3 *db, string table, string insertStr)
+void insert(sqlite3 *db, string table, string insertStr, string photoFileName, string driverServiceNumber)
 {
     if(insertStr == "")
     {
@@ -26,6 +116,11 @@ void insert(sqlite3 *db, string table, string insertStr)
         cerr << "SQL error: " << err_msg << endl;
         sqlite3_free(err_msg);
         return;
+    }
+    
+    if (driverServiceNumber != "")
+    {
+        insertImage(db, photoFileName, driverServiceNumber);
     }
 }
 

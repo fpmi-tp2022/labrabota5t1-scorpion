@@ -33,8 +33,11 @@ int main()
             {
                 string table = "";
                 string insertStr = "";
-                insertStr = getIndertData(table);
-                insert(db, table, insertStr);
+                string driverServiceNumber = "";
+                string photoFileName = "";
+                insertStr = getIndertData(table, photoFileName, driverServiceNumber);
+                string photoFileNameWithPath = "./img//" + photoFileName;
+                insert(db, table, insertStr, photoFileNameWithPath, driverServiceNumber);
                 break;
             }
             case 2:

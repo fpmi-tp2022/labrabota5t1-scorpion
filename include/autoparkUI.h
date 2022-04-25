@@ -6,7 +6,7 @@
 using namespace std;
 
 // Get data for inserting into a table
-string getIndertData(string& table);
+string getIndertData(string& table, string& photoFileName, string& driverServiceNumber);
 
 // Get data for deleting record from table
 string getDeleteData(string& table, string& column);

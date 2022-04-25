@@ -5,8 +5,11 @@
 #include <string>
 using namespace std;
 
+// Insert image into a table (update table)
+void insertImage(sqlite3 *db, string fileName, string driverServiceNumber);
+
 // Insert data into a table
-void insert(sqlite3 *db, string table, string insertStr);
+void insert(sqlite3 *db, string table, string insertStr, string photoFileName, string driverServiceNumber);
 
 // Delete data from a table
 void deleteRecord(sqlite3 *db, string table, string column, string deleteValue);

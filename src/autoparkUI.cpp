@@ -8,7 +8,7 @@
 using namespace std;
 
 // Get data for inserting into a table
-string getIndertData(string& table)
+string getIndertData(string& table, string& photoFileName, string& driverServiceNumber)
 {
     string data = "";
     
@@ -26,27 +26,25 @@ string getIndertData(string& table)
         {
             table = "users";
             string login;
-            string driverServiceNumber;
+            string serviceNumber;
             cout << "Введите логин" << endl;
             cin >> login;
             cout << "Введите табельный номер водителя" << endl;
-            cin >> driverServiceNumber;
-            data = "'" + login + "', '" + driverServiceNumber + "'";
+            cin >> serviceNumber;
+            data = "'" + login + "', '" + serviceNumber + "'";
             break;
         }
         case 2:
         {
             table = "drivers";
-            string serviceNumber;
             string lastName;
             string category;
             string workExperience;
             string address;
             string birthYear;
             string carNumber;
-            string photoFileName = "Нет фото";
             cout << "Введите табельный номер водителя" << endl;
-            cin >> serviceNumber;
+            cin >> driverServiceNumber;
             cout << "Введите фамилию водителя" << endl;
             cin >> lastName;
             cout << "Введите категорию водителя" << endl;
@@ -59,10 +57,10 @@ string getIndertData(string& table)
             cin >> birthYear;
             cout << "Введите номер машины водителя" << endl;
             cin >> carNumber;
-            /*cout << "Введите название файла с фотографией водителя" << endl;
-            cin >> photoFileName;*/            
+            cout << "Введите название файла с фотографией водителя" << endl;
+            cin >> photoFileName;
             
-            data = "'" + serviceNumber + "', '" + lastName + "', '" + category + "', '" + workExperience + "', '" + address + "', '" + birthYear + "', '" + carNumber + "', '" + photoFileName + "'";
+            data = "'" + driverServiceNumber + "', '" + lastName + "', '" + category + "', '" + workExperience + "', '" + address + "', '" + birthYear + "', '" + carNumber + "', 'Нет фото'";
             break;
         }
         case 3:
@@ -93,7 +91,7 @@ string getIndertData(string& table)
             string kilometrage;
             string cargoWeight;
             string cost;
-            string driverServiceNumber;
+            string serviceNumber;
             cout << "Введите номер заказа" << endl;
             cin >> id;
             cout << "Введите дату заказа" << endl;
@@ -109,8 +107,8 @@ string getIndertData(string& table)
             cout << "Введите стоимость перевозки" << endl;
             cin >> cost;
             cout << "Введите табельный номер водителя" << endl;
-            cin >> driverServiceNumber;
-            data = "'" + id + "', '" + date + "', '" + driverLastName + "', '" + carNumber + "', '" + kilometrage + "', '" + cargoWeight + "', '" + cost + "', '" + driverServiceNumber + "'";
+            cin >> serviceNumber;
+            data = "'" + id + "', '" + date + "', '" + driverLastName + "', '" + carNumber + "', '" + kilometrage + "', '" + cargoWeight + "', '" + cost + "', '" + serviceNumber + "'";
             break;
         }
         default:
@@ -185,10 +183,10 @@ string getUpdateValue(string& table, string& column, string& value, string& colu
 {
     string data = "";
     
-    cout << "1. Обновить все данные в таблице users" << endl;
-    cout << "2. Обновить все данные в таблице drivers" << endl;
-    cout << "3. Обновить все данные в таблице cars" << endl;
-    cout << "4. Обновить все данные в таблице completed_orders" << endl;
+    cout << "1. Обновить данные в таблице users" << endl;
+    cout << "2. Обновить данные в таблице drivers" << endl;
+    cout << "3. Обновить данные в таблице cars" << endl;
+    cout << "4. Обновить данные в таблице completed_orders" << endl;
     
     int option = 0;
     cin >> option;

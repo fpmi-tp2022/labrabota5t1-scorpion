@@ -11,7 +11,7 @@ using namespace std;
 
 bool checkLogin(string login, string password)
 {
-    ifstream fin("/Users/daria/Desktop/TP/lab5/lab5_project/passwords.txt");
+    ifstream fin("passwords.txt");
     if(!fin.is_open())
     {
         cerr << "Can't check password";
@@ -118,7 +118,7 @@ int main()
 {
     
     sqlite3 *db;
-    int rc = sqlite3_open("/Users/daria/Desktop/TP/lab5/lab5_project/lab5_project/src/autopark.db", &db);
+    int rc = sqlite3_open("autopark.db", &db);
     if (rc != SQLITE_OK)
     {
         cerr << "Cannot open database: " << sqlite3_errmsg(db) << endl;

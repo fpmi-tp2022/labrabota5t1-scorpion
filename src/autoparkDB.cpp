@@ -106,27 +106,21 @@ void insert(sqlite3 *db, string table, string insertStr, string photoFileName, s
     {
         char* insertStr2 = (char*)insertStr.c_str();
         char* insertParam;
-        cout<<insertStr<<"\n";
-        cout << insertStr2<<"\n";
+
         insertParam = strtok(insertStr2, ",'");
         for(int i = 1; i <=6; i++)
         {
             insertParam = strtok(NULL, ",'");
-            cout << insertParam<<"\n";
         }
         string carNumber = insertParam;
         
         for(int i = 1; i <=4; i++)
         {
             insertParam = strtok(NULL, ",'");
-            cout << insertParam<<"\n";
         }
         
-        cout <<insertParam<<"\n";
         
         string cargoWeight = insertParam;
-        
-        cout << "carNumber = " << carNumber <<"\nweight = " <<cargoWeight<< "\n";
         
         if(!checkCargoWeight(db, carNumber, cargoWeight))
         {

@@ -1,3 +1,8 @@
+---
+menu: 
+  url: https://github.com/fpmi-tp2022/labrabota5t1-scorpion/blob/gitHubPagesSite/docs/_pages/functionalRequirements.md
+---
+
 # Добро пожаловать в labrabota5t1-scorpion!
 ## Название проекта: **"Автопарк"**
 Автопарк осуществляет обслуживание заказов на перевозку грузов, используя для этой цели свой парк автомашин и своих водителей. Водитель, выполнивший заказ, получает 20 % от стоимости перевозки.

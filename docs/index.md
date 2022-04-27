@@ -1,5 +1,5 @@
-<a href="index.md">Home</a>
-<a href="./_pages/functionalRequirements.md">Функциональные требования</a>
+[Home](index.md)
+[Функциональные требования](./_pages/functionalRequirements.md)
 
 # Добро пожаловать в labrabota5t1-scorpion!
 ## Название проекта: **"Автопарк"**

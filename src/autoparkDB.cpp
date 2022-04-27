@@ -102,9 +102,10 @@ void insertImage(sqlite3 *db, string fileName, string driverServiceNumber)
 // Insert data into a table
 void insert(sqlite3 *db, string table, string insertStr, string photoFileName, string driverServiceNumber)
 {
+    string insertStrCopy = insertStr;
     if(table == "completed_orders")
     {
-        char* insertStr2 = (char*)insertStr.c_str();
+        char* insertStr2 = (char*)insertStrCopy.c_str();
         char* insertParam;
 
         insertParam = strtok(insertStr2, ",'");

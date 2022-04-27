@@ -1,5 +1,5 @@
 [Home](index.md)
-[Функциональные требования](./docs/_pages/functionalRequirements.md)
+[Функциональные требования](pages/functionalRequirements.md)
 
 # Добро пожаловать в labrabota5t1-scorpion!
 ## Название проекта: **"Автопарк"**

@@ -1,7 +1,5 @@
----
-menu: 
-  url: https://github.com/fpmi-tp2022/labrabota5t1-scorpion/blob/gitHubPagesSite/docs/_pages/functionalRequirements.md
----
+<a href="index.md">Home</a>
+<a href="./_pages/functionalRequirements.md">Функциональные требования</a>
 
 # Добро пожаловать в labrabota5t1-scorpion!
 ## Название проекта: **"Автопарк"**

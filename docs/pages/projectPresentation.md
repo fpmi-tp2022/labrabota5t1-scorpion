@@ -114,7 +114,7 @@
 ![image](https://user-images.githubusercontent.com/78850640/165361737-51b31941-f0d3-4b9f-88a2-4521e917d77a.png)
 
 Ссылка на sql-файл:
-[https://my.vertabelo.com/doc/AC5kXLyH1pIQokgeIOovttdOUj9GD1LD](https://my.vertabelo.com/doc/AC5kXLyH1pIQokgeIOovttdOUj9GD1LD)
+[https://drive.google.com/drive/folders/1tEMWOVVS9TNj40xsB9Vrt1Jd6hytEBK3?usp=sharing](https://drive.google.com/drive/folders/1tEMWOVVS9TNj40xsB9Vrt1Jd6hytEBK3?usp=sharing)
 
 ### Организация работы с репозиторием и проектом
 Процесс работы был организован с помощью GitHub Projects в стиле Kanban.

@@ -56,3 +56,6 @@ bool checkCargoWeight(sqlite3 *db, string carNumber, string cargoWeight);
 
 // Get and print sum of earned money by driver for specified period
 void getEarningsByDriverByPeriod(sqlite3 *db, string driverServiceNumber, string startDate, string endDate);
+
+// Get, print and save to table earnings sum of earned money by all drivers for specified period
+void getEarningsAllDriversByPeriod(sqlite3 *db, string startDate, string endDate);

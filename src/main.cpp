@@ -185,6 +185,7 @@ int main()
                     cout << "5. По водителю, выполнившему наименьшее количество поездок, вывести все сведения и количество полученных денег" << endl;
                     cout << "6. По автомашине с наибольшим общим пробегом вывести все сведения" << endl;
                     cout << "7. По указанному водителю вывести заработок за период\n";
+                    cout << "8. По всем водителям вывести заработок за период (результат сохраняется в таблице earnings)\n";
                     
                     int choice = 0;
                     cin >> choice;
@@ -244,6 +245,18 @@ int main()
                             cout << "Введите дату окончания периода: ";
                             getline(cin, endDate);
                             getEarningsByDriverByPeriod(db, driverNumber, startDate, endDate);
+                            break;
+                        }
+                        case 8:
+                        {
+                            string startDate;
+                            cout << "Введите дату начала периода: ";
+                            getline(cin, startDate);
+                            getline(cin, startDate);
+                            string endDate;
+                            cout << "Введите дату окончания периода: ";
+                            getline(cin, endDate);
+                            getEarningsAllDriversByPeriod(db, startDate,endDate);
                             break;
                         }
                         default:

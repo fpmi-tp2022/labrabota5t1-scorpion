@@ -630,3 +630,42 @@ void getEarningsByDriverByPeriod(sqlite3 *db, string driverServiceNumber, string
     sqlite3_finalize(res);
 }
 
+// Get, print and save to table earnings sum of earned money by all drivers for specified period
+void getEarningsAllDriversByPeriod(sqlite3 *db, string startDate, string endDate)
+{
+    string sql = "SELECT driver_service_number, driver_last_name, sum(cost) FROM completed_orders  WHERE (date BETWEEN '" + startDate + "' AND '" + endDate + "') GROUP BY driver_service_number";
+    
+    sqlite3_stmt *res;
+
+    int rc = sqlite3_prepare_v2(db, sql.c_str(), -1, &res, 0);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "SQL error: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+        
+    int step = sqlite3_step(res);
+    
+    double earnings;
+    string driverLastName;
+    string driverNumber;
+    
+    cout << "Сумма заработанных денег за период с " << startDate << " по " << endDate << ": \n";
+    cout << "driver_service_number|driver_last_name|earned_sum\n";
+    while (step == SQLITE_ROW)
+    {
+        driverNumber = (char*)sqlite3_column_text(res, 0);
+        driverLastName = (char*)sqlite3_column_text(res, 1);
+        earnings = atof((char*)sqlite3_column_text(res, 2));
+        earnings *= 0.2;
+        
+        cout << driverNumber << "|" << driverLastName << "|" << earnings << "\n";
+        
+        step = sqlite3_step(res);
+    }
+        
+        
+    sqlite3_finalize(res);
+}
+
+

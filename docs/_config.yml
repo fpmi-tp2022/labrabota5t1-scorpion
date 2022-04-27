@@ -1,7 +1,6 @@
 title: Автопарк
 author: Иванова Мария и Шинкевич Дарья
-description: > # this means to ignore newlines until "baseurl:"
-Проект "Автопарк"
+description: > Проект "Автопарк"
 
 show_excerpts: true # set to false to remove excerpts on the homepage
 

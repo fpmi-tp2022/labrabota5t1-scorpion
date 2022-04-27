@@ -1,5 +1,15 @@
 # Презентация проекта
 
+[Home](../index.md)    
+[Функциональные требования](functionalRequirements.md)  
+[Диаграмма файлов приложения](applicationFileDiagram.md)  
+[Дополнительная спецификация](additionalSpecification.md)   
+[Схема базы данных](databaseSchema.md)  
+[Презентация проекта](projectPresentation.md)          
+[Ссылки на репозитории по курсу о GitHub Pages](linksToRepositories.md) 
+
+# Презентация проекта
+
 ### Авторы проекта: **Иванова Мария, Шинкевич Дарья.**
 
 1. **Менеджмент проекта в стиле Kanban.** Ответственные: Иванова Мария, Шинкевич Дарья.

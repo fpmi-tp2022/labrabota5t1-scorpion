@@ -53,3 +53,6 @@ void getCarWithMaxMileage(sqlite3 *db);
 
 //  Checks whether the weight of cargo daesn't exceed car's capacity
 bool checkCargoWeight(sqlite3 *db, string carNumber, string cargoWeight);
+
+// Get and print sum of earned money by driver for specified period
+void getEarningsByDriverByPeriod(sqlite3 *db, string driverServiceNumber, string startDate, string endDate);

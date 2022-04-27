@@ -184,6 +184,7 @@ int main()
                     cout << "4. По каждому водителю вывести общее количество поездок, общую массу перевезенных грузов и сумму заработанных денег" << endl;
                     cout << "5. По водителю, выполнившему наименьшее количество поездок, вывести все сведения и количество полученных денег" << endl;
                     cout << "6. По автомашине с наибольшим общим пробегом вывести все сведения" << endl;
+                    cout << "7. По указанному водителю вывести заработок за период\n";
                     
                     int choice = 0;
                     cin >> choice;
@@ -228,6 +229,21 @@ int main()
                         case 6:
                         {
                             getCarWithMaxMileage(db);
+                            break;
+                        }
+                        case 7:
+                        {
+                            string driverNumber;
+                            cout << "Введите табельный номер водителя: ";
+                            getline(cin, driverNumber);
+                            getline(cin, driverNumber);
+                            string startDate;
+                            cout << "Введите дату начала периода: ";
+                            getline(cin, startDate);
+                            string endDate;
+                            cout << "Введите дату окончания периода: ";
+                            getline(cin, endDate);
+                            getEarningsByDriverByPeriod(db, driverNumber, startDate, endDate);
                             break;
                         }
                         default:
@@ -279,17 +295,25 @@ int main()
                     break;
                 case '4':
                 {
-                    string period = getPeriodData();
-                    string columnNames = "|id|date|driver_last_name|car_number|kilometrage|cargo_weight|cost|driver_service_number|";
-                    cout << columnNames << endl;
-                    getOrdersByDriver(db, driversServiceNumber, period);
-                    getOrdersByDriver(db,driversServiceNumber,period);
+                    getEarningsByDriver(db, driversServiceNumber);
                     break;
                 }
                 case '5':
+                {
+                    string startDate;
+                    cout << "Введите дату начала периода: ";
+                    getline(cin, startDate);
+                    getline(cin, startDate);
+                    string endDate;
+                    cout << "Введите дату окончания периода: ";
+                    getline(cin, endDate);
+                    getEarningsByDriverByPeriod(db, driversServiceNumber, startDate, endDate);
+                    break;
+                }
+                case '6':
                     getCarWithMaxMileage(db);
                     break;
-                case '6':
+                case '7':
                     continueBool = false;
                     break;
                 default:

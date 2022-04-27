@@ -439,8 +439,11 @@ void getEarningsByDriver(sqlite3 *db, string driverServiceNumber)
         totalCost = sqlite3_column_text(res, 0);
     }
     
+    double totalCostInt = atof((char*)totalCost);
+    totalCostInt *= 0.2;
+    
     cout << "Общая сумма заработанных денег: ";
-    cout << totalCost << endl;
+    cout << totalCostInt << endl;
     
     sqlite3_finalize(res);
 }
@@ -508,8 +511,7 @@ void getDriverWithMinTripsNumInfo(sqlite3 *db)
 void getCarWithMaxMileage(sqlite3 *db)
 {
     sqlite3_stmt *res;
-    
-    /*string sql = "SELECT max(mileage1 + coalesce(total_kilometrage, 0)), num FROM (SELECT   cars.car_number AS num, cars.mileage AS mileage1,SUM( completed_orders.kilometrage ) AS total_kilometrage FROM cars LEFT OUTER JOIN completed_orders  ON cars.car_number = completed_orders.car_number GROUP BY cars.car_number)";*/
+
     string sql = "SELECT   (cars.mileage + coalesce (SUM( completed_orders.kilometrage),0)) AS total_kilometrage, cars.car_number AS num FROM cars LEFT OUTER JOIN completed_orders  ON cars.car_number = completed_orders.car_number GROUP BY cars.car_number ORDER BY total_kilometrage DESC";
     
     int rc = sqlite3_prepare_v2(db, sql.c_str(), -1, &res, 0);
@@ -597,5 +599,34 @@ bool checkCargoWeight(sqlite3 *db, string carNumber, string cargoWeight)
     {
         return true;
     }
+}
+
+// Get and print sum of earned money by driver for specified period
+void getEarningsByDriverByPeriod(sqlite3 *db, string driverServiceNumber, string startDate, string endDate)
+{
+    sqlite3_stmt *res;
+    string sql = "SELECT sum(cost) FROM completed_orders WHERE driver_service_number='" + driverServiceNumber + "' AND (date BETWEEN '" + startDate + "' AND '" + endDate + "')";
+        
+    int rc = sqlite3_prepare_v2(db, sql.c_str(), -1, &res, 0);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "SQL error: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+        
+    int step = sqlite3_step(res);
+        
+    double earnings;
+    if (step == SQLITE_ROW)
+    {
+        earnings = atof((char*)sqlite3_column_text(res, 0));
+    }
+        
+    earnings *= 0.2;
+        
+    cout << "Сумма заработанных денег за период с " << startDate << " по " << endDate << ": \n";
+    cout << earnings << endl;
+        
+    sqlite3_finalize(res);
 }
 

@@ -1,14 +1,9 @@
-[Home](index.md)
+[Home](index.md)             
+[Функциональные требования](pages/functionalRequirements.md)    [Диаграмма файлов приложения](pages/applicationFileDiagram.md)
 
-[Функциональные требования](pages/functionalRequirements.md)
+[Дополнительная спецификация](pages/additionalSpecification.md) [Схема базы данных](pages/databaseSchema.md)
 
-[Диаграмма файлов приложения](pages/applicationFileDiagram.md)
-
-[Дополнительная спецификация](pages/additionalSpecification.md)
-
-[Схема базы данных](pages/databaseSchema.md)
-
-[Презентация проекта](pages/projectPresentation.md)
+[Презентация проекта](pages/projectPresentation.md)         [Ссылки на репозитории по курсу о GitHub Pages](pages/linksToRepositories.md)
 
 # Добро пожаловать в labrabota5t1-scorpion!
 ## Название проекта: **"Автопарк"**

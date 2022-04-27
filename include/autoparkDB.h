@@ -50,3 +50,6 @@ void getDriverWithMinTripsNumInfo(sqlite3 *db);
 
 // Get and print information about a car with max mileage
 void getCarWithMaxMileage(sqlite3 *db);
+
+//  Checks whether the weight of cargo daesn't exceed car's capacity
+bool checkCargoWeight(sqlite3 *db, string carNumber, string cargoWeight);

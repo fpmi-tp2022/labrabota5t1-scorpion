@@ -1,5 +1,15 @@
 # Диаграмма файлов приложения
 
+[Home](../index.md)    
+[Функциональные требования](functionalRequirements.md) 
+[Диаграмма файлов приложения](applicationFileDiagram.md)
+[Дополнительная спецификация](additionalSpecification.md)
+[Схема базы данных](databaseSchema.md)
+[Презентация проекта](projectPresentation.md)        
+[Ссылки на репозитории по курсу о GitHub Pages](linksToRepositories.md)
+
+# Диаграмма файлов приложения
+
 #### Диаграмма файлов:
 **Вставить диаграмму файлов**
 

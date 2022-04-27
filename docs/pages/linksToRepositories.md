@@ -17,4 +17,4 @@
 ### Ссылки на репозитории участников проекта:
 **Иванова Мария**: [https://github.com/MaryIv76/github-pages-with-jekyll](https://github.com/MaryIv76/github-pages-with-jekyll)
 
-**Шинкевич Дарья**: **ВСТАВИТЬ ССЫЛКУ!!!**
+**Шинкевич Дарья**: [https://github.com/DaraShin/github-pages-with-jekyll](https://github.com/DaraShin/github-pages-with-jekyll)

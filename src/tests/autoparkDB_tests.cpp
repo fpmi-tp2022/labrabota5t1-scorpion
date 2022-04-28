@@ -16,7 +16,7 @@ TEST(checkCargoWeightFunctionTest, weightLessThanCapacity)
         sqlite3_close(db);
     }
     
-    ASSERT_EQ(checkCargoWeight(db, "1234XA", "12"), true) << "Weight is less than capacity, but function says cargo is too heavy";
+    EXPECT_EQ(checkCargoWeight(db, "1234XA", "12"), true) << "Weight is less than capacity, but function says cargo is too heavy";
     
 }
 

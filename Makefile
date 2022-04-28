@@ -18,7 +18,12 @@ autoparkUI.o: src/autoparkUI.cpp include/autoparkUI.h
 
 clean:
 	rm -f obj/*.o ./bin/autopark
+	rm -f ./bin/autoparkDB_tests
 
 run: 
 	./bin/autopark
+
+test:
+	g++ -std=c++11 src/autoparkDB.cpp src/tests/autoparkDB_tests.cpp -l gtest -l sqlite3 -o ./bin/autoparkDB_tests
+	./bin/autoparkDB_tests
 

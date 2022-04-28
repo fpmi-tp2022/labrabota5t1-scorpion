@@ -143,7 +143,6 @@ int main()
         {
             int option = 0;
             printAdminMenu();
-            //cin.clear();
             cin >> option;
             
             switch(option)
@@ -259,7 +258,6 @@ int main()
                             getline(cin, endDate);
 
                             getEarningsAllDriversByPeriod(db, startDate,endDate);
-                            //cin.clear();
                             break;
                         }
                         default:

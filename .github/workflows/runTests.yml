@@ -16,7 +16,7 @@ jobs:
             cd build
             sudo cmake ..
             sudo make
-            sudo cp libg* /usr/lib/
+            sudo cp *.a /usr/lib/
             cd ..
             sudo rm -rf build
             sudo mkdir /usr/local/lib/googletest

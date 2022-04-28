@@ -102,6 +102,34 @@ void insertImage(sqlite3 *db, string fileName, string driverServiceNumber)
 // Insert data into a table
 void insert(sqlite3 *db, string table, string insertStr, string photoFileName, string driverServiceNumber)
 {
+    string insertStrCopy = insertStr;
+    if(table == "completed_orders")
+    {
+        char* insertStr2 = (char*)insertStrCopy.c_str();
+        char* insertParam;
+
+        insertParam = strtok(insertStr2, ",'");
+        for(int i = 1; i <=6; i++)
+        {
+            insertParam = strtok(NULL, ",'");
+        }
+        string carNumber = insertParam;
+        
+        for(int i = 1; i <=4; i++)
+        {
+            insertParam = strtok(NULL, ",'");
+        }
+        
+        
+        string cargoWeight = insertParam;
+        
+        if(!checkCargoWeight(db, carNumber, cargoWeight))
+        {
+            cout << "Вес груза превышает грузоподъемность машины. Заказ не был добавлен\n";
+            return;
+        }
+    }
+    
     if(insertStr == "")
     {
         return;
@@ -411,8 +439,11 @@ void getEarningsByDriver(sqlite3 *db, string driverServiceNumber)
         totalCost = sqlite3_column_text(res, 0);
     }
     
+    double totalCostInt = atof((char*)totalCost);
+    totalCostInt *= 0.2;
+    
     cout << "Общая сумма заработанных денег: ";
-    cout << totalCost << endl;
+    cout << totalCostInt << endl;
     
     sqlite3_finalize(res);
 }
@@ -479,5 +510,188 @@ void getDriverWithMinTripsNumInfo(sqlite3 *db)
 // Get and print information about a car with max mileage
 void getCarWithMaxMileage(sqlite3 *db)
 {
+    sqlite3_stmt *res;
+
+    string sql = "SELECT   (cars.mileage + coalesce (SUM( completed_orders.kilometrage),0)) AS total_kilometrage, cars.car_number AS num FROM cars LEFT OUTER JOIN completed_orders  ON cars.car_number = completed_orders.car_number GROUP BY cars.car_number ORDER BY total_kilometrage DESC";
     
+    int rc = sqlite3_prepare_v2(db, sql.c_str(), -1, &res, 0);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "SQL error: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+    
+    int step = sqlite3_step(res);
+    
+    string maxMileage, curMileage;
+    char* carNumber;
+    sqlite3_stmt *resCars;
+    
+    if(step == SQLITE_ROW)
+    {
+        maxMileage = (char*)sqlite3_column_text(res, 0);
+        cout << "Максимальный пробег: " << maxMileage << "\n";
+        cout << "Машины с максимальным пробегом:\n";
+        cout << "car_number|brand|mileage|capacity\n";
+    }
+    
+    curMileage = maxMileage;
+    while (step == SQLITE_ROW)
+    {
+        curMileage =(char*)sqlite3_column_text(res, 0);
+        if(    curMileage != maxMileage)
+        {
+            break;
+        }
+        carNumber = (char*)sqlite3_column_text(res, 1);
+        sql = "SELECT * FROM cars WHERE car_number='";
+        sql += carNumber;
+        sql += "'";
+        
+        rc = sqlite3_prepare_v2(db, sql.c_str(), -1, &resCars, 0);
+        if (rc != SQLITE_OK)
+        {
+            cerr << "SQL error: " << sqlite3_errmsg(db) << endl;
+            return;
+        }
+        
+        printSelect(resCars, 4);
+        
+        sqlite3_finalize(resCars);
+        
+        step = sqlite3_step(res);
+    }
+    
+
+    sqlite3_finalize(res);
 }
+
+//  Checks whether the weight of cargo daesn't exceed car's capacity
+bool checkCargoWeight(sqlite3 *db, string carNumber, string cargoWeight)
+{
+    string sql = "SELECT capacity FROM cars WHERE car_number='" + carNumber+ "'";
+    
+    sqlite3_stmt *res;
+    
+    int rc = sqlite3_prepare_v2(db, sql.c_str(), -1, &res, 0);
+    
+    if (rc != SQLITE_OK)
+    {
+        cerr << "SQL error: " << sqlite3_errmsg(db) << endl;
+        return false;
+    }
+    
+    int step = sqlite3_step(res);
+    
+    int carCapacity;
+    if (step == SQLITE_ROW)
+    {
+        carCapacity = atoi((char*)sqlite3_column_text(res, 0));
+    }
+    
+    sqlite3_finalize(res);
+    
+    if((double)carCapacity < stof(cargoWeight.c_str()))
+    {
+        return false;
+    }
+    else
+    {
+        return true;
+    }
+}
+
+// Get and print sum of earned money by driver for specified period
+void getEarningsByDriverByPeriod(sqlite3 *db, string driverServiceNumber, string startDate, string endDate)
+{
+    sqlite3_stmt *res;
+    string sql = "SELECT sum(cost) FROM completed_orders WHERE driver_service_number='" + driverServiceNumber + "' AND (date BETWEEN '" + startDate + "' AND '" + endDate + "')";
+        
+    int rc = sqlite3_prepare_v2(db, sql.c_str(), -1, &res, 0);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "SQL error: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+        
+    int step = sqlite3_step(res);
+        
+    double earnings;
+    if (step == SQLITE_ROW)
+    {
+        earnings = atof((char*)sqlite3_column_text(res, 0));
+    }
+        
+    earnings *= 0.2;
+        
+    cout << "Сумма заработанных денег за период с " << startDate << " по " << endDate << ": \n";
+    cout << earnings << endl;
+        
+    sqlite3_finalize(res);
+}
+
+// Get, print and save to table earnings sum of earned money by all drivers for specified period
+void getEarningsAllDriversByPeriod(sqlite3 *db, string startDate, string endDate)
+{
+    
+    string sql = "SELECT driver_service_number, driver_last_name, sum(cost) FROM completed_orders  WHERE (date BETWEEN '" + startDate + "' AND '" + endDate + "') GROUP BY driver_service_number";
+    
+    sqlite3_stmt *res;
+
+    int rc = sqlite3_prepare_v2(db, sql.c_str(), -1, &res, 0);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "SQL error: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+        
+    int step = sqlite3_step(res);
+    
+    sql = "DELETE FROM earnings;";
+    
+    char* err_msg = 0;
+    rc = sqlite3_exec(db, sql.c_str(), 0, 0, &err_msg);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "SQL error: " <<err_msg << endl;
+        sqlite3_free(err_msg);
+        return;
+    }
+    
+    double earnings;
+    string driverLastName;
+    string driverNumber;
+    
+    cout << "Сумма заработанных денег за период с " << startDate << " по " << endDate << ": \n";
+    cout << "driver_service_number|driver_last_name|earned_sum\n";
+    while (step == SQLITE_ROW)
+    {
+        driverNumber = (char*)sqlite3_column_text(res, 0);
+        driverLastName = (char*)sqlite3_column_text(res, 1);
+        earnings = atof((char*)sqlite3_column_text(res, 2));
+        earnings *= 0.2;
+        
+        cout << driverNumber << "|" << driverLastName << "|" << earnings << "\n";
+        
+        char* sqlChar;
+        
+        sql = "INSERT INTO earnings VALUES ('" + driverLastName + "', '" + driverLastName + "', '" + to_string(earnings) + "')";
+        
+        err_msg = 0;
+        rc = sqlite3_exec(db, sql.c_str(), 0, 0, &err_msg);
+        
+        if (rc != SQLITE_OK)
+        {
+            cerr << "SQL error: " <<err_msg << endl;
+            sqlite3_free(err_msg);
+            return;
+        }
+        
+        step = sqlite3_step(res);
+    }
+        
+        
+    sqlite3_finalize(res);
+}
+
+

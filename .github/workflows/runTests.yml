@@ -8,9 +8,14 @@ jobs:
 
     steps:
     - name: Install gtest manually
-              run: sudo apt-get install libgtest-dev && cd /usr/src/gtest && sudo cmake CMakeLists.txt && sudo make && sudo cp *.a /usr/lib && sudo ln -s /usr/lib/libgtest.a /usr/local/lib/libgtest.a && sudo ln -s /usr/lib/libgtest_main.a /usr/local/lib/libgtest_main.a
-
-    - uses: actions/checkout@v2
+        run: sudo apt-get install libgtest-dev
+        run: cd /usr/src/gtest
+        run: sudo cmake CMakeLists.txt
+        run: sudo make
+        run: sudo cp *.a /usr/lib
+        run: sudo ln -s /usr/lib/libgtest.a /usr/local/lib/libgtest.a
+        run: sudo ln -s /usr/lib/libgtest_main.a /usr/local/lib/libgtest_main.a
+    - uses: actions/checkout@v1
 
     - name: Run tests
         run: make test

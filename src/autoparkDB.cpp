@@ -633,6 +633,7 @@ void getEarningsByDriverByPeriod(sqlite3 *db, string driverServiceNumber, string
 // Get, print and save to table earnings sum of earned money by all drivers for specified period
 void getEarningsAllDriversByPeriod(sqlite3 *db, string startDate, string endDate)
 {
+    
     string sql = "SELECT driver_service_number, driver_last_name, sum(cost) FROM completed_orders  WHERE (date BETWEEN '" + startDate + "' AND '" + endDate + "') GROUP BY driver_service_number";
     
     sqlite3_stmt *res;
@@ -645,6 +646,17 @@ void getEarningsAllDriversByPeriod(sqlite3 *db, string startDate, string endDate
     }
         
     int step = sqlite3_step(res);
+    
+    sql = "DELETE FROM earnings;";
+    
+    char* err_msg = 0;
+    rc = sqlite3_exec(db, sql.c_str(), 0, 0, &err_msg);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "SQL error: " <<err_msg << endl;
+        sqlite3_free(err_msg);
+        return;
+    }
     
     double earnings;
     string driverLastName;
@@ -660,6 +672,20 @@ void getEarningsAllDriversByPeriod(sqlite3 *db, string startDate, string endDate
         earnings *= 0.2;
         
         cout << driverNumber << "|" << driverLastName << "|" << earnings << "\n";
+        
+        char* sqlChar;
+        
+        sql = "INSERT INTO earnings VALUES ('" + driverLastName + "', '" + driverLastName + "', '" + to_string(earnings) + "')";
+        
+        err_msg = 0;
+        rc = sqlite3_exec(db, sql.c_str(), 0, 0, &err_msg);
+        
+        if (rc != SQLITE_OK)
+        {
+            cerr << "SQL error: " <<err_msg << endl;
+            sqlite3_free(err_msg);
+            return;
+        }
         
         step = sqlite3_step(res);
     }

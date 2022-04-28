@@ -143,6 +143,7 @@ int main()
         {
             int option = 0;
             printAdminMenu();
+            //cin.clear();
             cin >> option;
             
             switch(option)
@@ -256,7 +257,9 @@ int main()
                             string endDate;
                             cout << "Введите дату окончания периода: ";
                             getline(cin, endDate);
+
                             getEarningsAllDriversByPeriod(db, startDate,endDate);
+                            //cin.clear();
                             break;
                         }
                         default:

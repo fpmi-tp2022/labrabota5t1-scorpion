@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <sqlite3.h>
 #include <string>
+#include <cstring>
 #include "../include/autoparkDB.h"
 using namespace std;
 
@@ -262,7 +263,7 @@ void getOrdersByDriver(sqlite3 *db, string driverServiceNumber, string period)
 }
 
 // Get and print total mileage of a car
-void getMileageByCar(sqlite3 *db, string carNumber)
+void getMileageByCar(sqlite3 *db, string carNumber, ostream& outStream)
 {
     sqlite3_stmt *res;
     string sql = "SELECT sum(kilometrage) from completed_orders where car_number='" + carNumber + "'";
@@ -302,14 +303,14 @@ void getMileageByCar(sqlite3 *db, string carNumber)
     int kilometrageInt = stoi((char*)kilometrage);
     int mileageInt = stoi((char*)mileage);
     
-    cout << "Общий пробег:" << endl;
-    cout << kilometrageInt + mileageInt << endl;
+    outStream << "Общий пробег:" << endl;
+    outStream << kilometrageInt + mileageInt << endl;
 
     sqlite3_finalize(res);
 }
 
 // Get and print total weight of transported goods by car
-void getTransportedWeightByCar(sqlite3 *db, string carNumber)
+void getTransportedWeightByCar(sqlite3 *db, string carNumber, ostream& out)
 {
     sqlite3_stmt *res;
     string sql = "SELECT sum(cargo_weight) from completed_orders where car_number='" + carNumber + "'";
@@ -329,8 +330,8 @@ void getTransportedWeightByCar(sqlite3 *db, string carNumber)
         totalWeight = sqlite3_column_text(res, 0);
     }
     
-    cout << "Общая масса перевезенных грузов:" << endl;
-    cout << totalWeight << endl;
+    out << "Общая масса перевезенных грузов:" << endl;
+    out << totalWeight << endl;
     
     sqlite3_finalize(res);
 }
@@ -365,7 +366,7 @@ void getNumOfTripsTransportedWeightEarningsOfAllDrivers(sqlite3 *db)
 }
 
 // Get and print total number of trips by driver
-void getNumOfTripsByDriver(sqlite3 *db, string driverServiceNumber)
+void getNumOfTripsByDriver(sqlite3 *db, string driverServiceNumber, ostream& out)
 {
     sqlite3_stmt *res;
     string sql = "SELECT count(id) from completed_orders where driver_service_number='" + driverServiceNumber + "'";
@@ -385,14 +386,14 @@ void getNumOfTripsByDriver(sqlite3 *db, string driverServiceNumber)
         numTrips = sqlite3_column_text(res, 0);
     }
     
-    cout << "Общее количество поездок: ";
-    cout << numTrips << endl;
+    out << "Общее количество поездок: ";
+    out << numTrips << endl;
     
     sqlite3_finalize(res);
 }
 
 // Get and print total weight of transported goods by driver
-void getTransportedWeightByDriver(sqlite3 *db, string driverServiceNumber)
+void getTransportedWeightByDriver(sqlite3 *db, string driverServiceNumber, ostream& out)
 {
     sqlite3_stmt *res;
     string sql = "SELECT sum(cargo_weight) from completed_orders where driver_service_number='" + driverServiceNumber + "'";
@@ -412,14 +413,14 @@ void getTransportedWeightByDriver(sqlite3 *db, string driverServiceNumber)
         totalWeight = sqlite3_column_text(res, 0);
     }
     
-    cout << "Общая масса перевезенных грузов: ";
-    cout << totalWeight << endl;
+    out << "Общая масса перевезенных грузов: ";
+    out << totalWeight << endl;
     
     sqlite3_finalize(res);
 }
 
 // Get and print total sum of earned money by driver
-void getEarningsByDriver(sqlite3 *db, string driverServiceNumber)
+void getEarningsByDriver(sqlite3 *db, string driverServiceNumber, ostream& out)
 {
     sqlite3_stmt *res;
     string sql = "SELECT sum(cost) from completed_orders where driver_service_number='" + driverServiceNumber + "'";
@@ -442,8 +443,8 @@ void getEarningsByDriver(sqlite3 *db, string driverServiceNumber)
     double totalCostInt = atof((char*)totalCost);
     totalCostInt *= 0.2;
     
-    cout << "Общая сумма заработанных денег: ";
-    cout << totalCostInt << endl;
+    out << "Общая сумма заработанных денег: ";
+    out << totalCostInt << endl;
     
     sqlite3_finalize(res);
 }
@@ -602,7 +603,7 @@ bool checkCargoWeight(sqlite3 *db, string carNumber, string cargoWeight)
 }
 
 // Get and print sum of earned money by driver for specified period
-void getEarningsByDriverByPeriod(sqlite3 *db, string driverServiceNumber, string startDate, string endDate)
+void getEarningsByDriverByPeriod(sqlite3 *db, string driverServiceNumber, string startDate, string endDate, ostream& out)
 {
     sqlite3_stmt *res;
     string sql = "SELECT sum(cost) FROM completed_orders WHERE driver_service_number='" + driverServiceNumber + "' AND (date BETWEEN '" + startDate + "' AND '" + endDate + "')";
@@ -624,8 +625,8 @@ void getEarningsByDriverByPeriod(sqlite3 *db, string driverServiceNumber, string
         
     earnings *= 0.2;
         
-    cout << "Сумма заработанных денег за период с " << startDate << " по " << endDate << ": \n";
-    cout << earnings << endl;
+    out << "Сумма заработанных денег за период с " << startDate << " по " << endDate << ": \n";
+    out << earnings << endl;
         
     sqlite3_finalize(res);
 }

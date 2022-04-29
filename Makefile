@@ -25,6 +25,6 @@ run:
 
 test:
 	mkdir -p bin
-	g++ -std=c++11 src/autoparkDB.cpp src/tests/autoparkDB_tests.cpp -l gtest -l sqlite3 -o ./bin/autoparkDB_tests
+	g++ -std=c++11 src/autoparkDB.cpp src/tests/autoparkDB_tests.cpp -l gtest -l gtest_main -l sqlite3 -o ./bin/autoparkDB_tests
 	./bin/autoparkDB_tests
 

@@ -27,23 +27,23 @@ void selectAllRecords(sqlite3 *db, string table, int columnNumber);
 void getOrdersByDriver(sqlite3 *db, string driverServiceNumber, string period);
 
 // Get and print total mileage of a car
-void getMileageByCar(sqlite3 *db, string carNumber);
+void getMileageByCar(sqlite3 *db, string carNumber, ostream& outStream = cout);
 
 // Get and print total weight of transported goods by car
-void getTransportedWeightByCar(sqlite3 *db, string carNumber);
+void getTransportedWeightByCar(sqlite3 *db, string carNumber, ostream& out = cout);
 
 // Get and print total number of trips, total weight of transported goods and total sum
 // of earned money of all drivers
 void getNumOfTripsTransportedWeightEarningsOfAllDrivers(sqlite3 *db);
 
 // Get and print total number of trips by driver
-void getNumOfTripsByDriver(sqlite3 *db, string driverServiceNumber);
+void getNumOfTripsByDriver(sqlite3 *db, string driverServiceNumber, ostream& out = cout);
 
 // Get and print total weight of transported goods by driver
-void getTransportedWeightByDriver(sqlite3 *db, string driverServiceNumber);
+void getTransportedWeightByDriver(sqlite3 *db, string driverServiceNumber, ostream& out = cout);
 
 // Get and print total sum of earned money by driver
-void getEarningsByDriver(sqlite3 *db, string driverServiceNumber);
+void getEarningsByDriver(sqlite3 *db, string driverServiceNumber, ostream& out = cout);
 
 // Get and print information about a driver with min number of trips
 void getDriverWithMinTripsNumInfo(sqlite3 *db);
@@ -55,7 +55,7 @@ void getCarWithMaxMileage(sqlite3 *db);
 bool checkCargoWeight(sqlite3 *db, string carNumber, string cargoWeight);
 
 // Get and print sum of earned money by driver for specified period
-void getEarningsByDriverByPeriod(sqlite3 *db, string driverServiceNumber, string startDate, string endDate);
+void getEarningsByDriverByPeriod(sqlite3 *db, string driverServiceNumber, string startDate, string endDate, ostream& out = cout);
 
 // Get, print and save to table earnings sum of earned money by all drivers for specified period
 void getEarningsAllDriversByPeriod(sqlite3 *db, string startDate, string endDate);

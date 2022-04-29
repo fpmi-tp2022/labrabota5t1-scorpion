@@ -18,13 +18,13 @@ string getUpdateValue(string& table, string& column, string& value, string& colu
 string getSelectData(int& columnNumber, string& columnNames);
 
 // Get driver service number
-string getDriverServiceNumber();
+string getDriverServiceNumber(istream& in = cin);
 
 // Get car number
-string getCarNumber();
+string getCarNumber(istream& in = cin);
 
 // Get period
-string getPeriodData();
+string getPeriodData(istream& in = cin);
 
 // Print menu for admin
 void printAdminMenu();

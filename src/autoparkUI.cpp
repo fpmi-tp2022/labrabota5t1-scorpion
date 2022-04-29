@@ -305,29 +305,29 @@ string getSelectData(int &columnNumber, string& columnNames)
 }
 
 // Get driver service number
-string getDriverServiceNumber()
+string getDriverServiceNumber(istream& in)
 {
     cout << "Введите табельный номер водителя" << endl;
     string driverServiceNumber = "";
-    cin >> driverServiceNumber;
+    in >> driverServiceNumber;
     return driverServiceNumber;
 }
 
 // Get car number
-string getCarNumber()
+string getCarNumber(istream& in)
 {
     cout << "Введите номер машины" << endl;
     string carNumber = "";
-    cin >> carNumber;
+    in >> carNumber;
     return carNumber;
 }
 
 // Get period
-string getPeriodData()
+string getPeriodData(istream& in)
 {
     cout << "Вывести данные за весь период? (да/нет)" << endl;
     string answer;
-    cin >> answer;
+    in >> answer;
     
     string data;
     if(answer == "да")
@@ -338,10 +338,11 @@ string getPeriodData()
     {
         cout << "Введите первую дату" << endl;
         string firstDate = "";
-        cin >> firstDate;
+        in >> firstDate;
+        
         cout << "Введите вторую дату" << endl;
         string secondDate = "";
-        cin >> secondDate;
+        in >> secondDate;
         data = "'" + firstDate + "' and '" + secondDate + "'";
     }
     

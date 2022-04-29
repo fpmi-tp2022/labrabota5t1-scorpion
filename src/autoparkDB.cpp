@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <sqlite3.h>
 #include <string>
+#include <cstring>
 #include "../include/autoparkDB.h"
 using namespace std;
 

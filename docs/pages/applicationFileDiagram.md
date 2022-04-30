@@ -25,4 +25,5 @@
 Функции, которые присутствуют в программе, представлены на диаграмме файлов.
 
 #### Диаграмма файлов:
-![class_diagram](https://user-images.githubusercontent.com/78850433/165996252-ee81b0e7-97a9-4004-9369-493c79e701df.svg)
+![class_diagram2](https://user-images.githubusercontent.com/78850433/166099124-7dea45f4-7551-498f-8b02-b3f8b9586a75.svg)
+
